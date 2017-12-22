@@ -3,14 +3,12 @@
 
 ## Links
 
-- Documentation(ReDoc): https://thiloklein.github.io/matchingtools/
-- SwaggerUI: https://thiloklein.github.io/matchingtools/swagger-ui/
+- Documentation(ReDoc): https://matchingtools.org/
+- SwaggerUI: https://matchingtools.org/swagger-ui/
 - Look full spec:
-    + JSON https://thiloklein.github.io/matchingtools/swagger.json
-    + YAML https://thiloklein.github.io/matchingtools/swagger.yaml
-- Preview spec version for branch `[branch]`: https://thiloklein.github.io/matchingtools/preview/[branch]
-
-**Warning:** All above links are updated only after Travis CI finishes deployment
+    + JSON https://matchingtools.org/swagger.json
+    + YAML https://matchingtools.org/swagger.yaml
+- Preview spec version for branch `[branch]`: https://matchingtools.org/preview/[branch]
 
 ## Working on specification
 ### Install
