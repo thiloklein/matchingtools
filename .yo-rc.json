@@ -1,0 +1,10 @@
+{
+  "generator-openapi-repo": {
+    "importExistingSpec": false,
+    "name": "MatchingTools",
+    "repo": "thiloklein/matchingtools",
+    "splitSpec": false,
+    "samples": true,
+    "installSwaggerUI": true
+  }
+}
