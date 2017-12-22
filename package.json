@@ -22,5 +22,8 @@
     "test": "swagger-repo validate",
     "start": "gulp serve",
     "deploy-branch": "node ./scripts/deploy-branch.js"
+  },
+  "devDependencies": {
+    "minimatch": "^3.0.4"
   }
 }
