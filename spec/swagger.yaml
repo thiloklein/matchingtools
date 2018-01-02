@@ -7,7 +7,7 @@ swagger: '2.0'
 schemes:
   - https # Remove if your API donsn't support HTTPS
 host: api.matchingtools.org # Replace with your hostname. 
-basePath: /hri/ # Replace with your basePath. Note: SHOULD begin with '/'.
+basePath: / # Replace with your basePath. Note: SHOULD begin with '/'.
 info:
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: |
@@ -41,20 +41,14 @@ info:
     url: 'https://matchingtools.com/logo.png'
 produces:
   # List of mime types your API endpoins can return.
-  # This is a global default. You can OVERWRITE it in each specific operation.
-  # Remove the ones not used in your API
   - application/json
-  - application/xml
-  - text/csv
-  # you can add any mime type your API produces to the list
+  #- application/xml
+  #- text/csv
 consumes:
   # List of mime types your API endpoins consumes.
-  # This is a global default. You can OVERWRITE it in each specific operation.
-  # Remove the ones not supported by your API
   - application/json
-  - application/xml
-  - text/csv
-  # you can add any mime type your API consumes to the list
+  #- application/xml
+  #- text/csv
 
 # A list of tags used by the specification with additional metadata.
 # The order of the tags can be used to reflect on their order by the parsing tools.
@@ -65,11 +59,15 @@ tags:
     description: Top-Trading-Cycles algorithms for housing markets and land allocation problems
   - name: SRI
     description: Algorithms for Stable Roomates problems with incomplete rank order lists
-    
+
 # Security scheme definitions that can be used across the specification.
 securityDefinitions:
   basic_auth:  # security definition name (you can name it as you want)
     type: basic
+
+# To apply Basic auth to the whole API:
+security:
+  - basic_auth: []
 
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
@@ -89,22 +87,45 @@ paths:
           schema:
             type: string
             example: 'Hello world!'
-      security:
-        - basic_auth: []
       responses:
+        '401':
+          $ref: "#/responses/UnauthorizedError"
         '200':
           description: 'OK'
           examples:
-            'application/json': 'Hello world!'
+            'application/json': {"rangliste_bewerber": {
+                "Lea": ["Stadt 2"],
+                "Mia": ["Privat",  "Stadt 2", "Stadt 1"],
+                "Kai": ["Stadt 1", "Stadt 2", "Privat"]
+              },
+              "rangliste_kita": {
+                "Stadt 1": ["Lea", "Kai", "Mia"],
+                "Stadt 2": ["Lea", "Kai", "Mia"],
+                "Privat":  ["Kai", "Mia", "Lea"]
+              },
+              "kapazitaet_kita": {
+                "Stadt 1": 1,
+                "Stadt 2": 1,
+                "Privat":  1 
+              }
+            }
           schema:
-            type: string
+            type: file
           # docuemnt headers for this repsonse
-          headers:
-            X-Rate-Limit: # Header name
-              type: integer # Header value type
-              format: int32 # Header value format
-              description: calls per hour allowed by the user
-            X-Expires-After:
-              type: string
-              format: date-time
-              description: date in UTC when token expires
+          #headers:
+          #  X-Rate-Limit: # Header name
+          #    type: integer # Header value type
+          #    format: int32 # Header value format
+          #    description: calls per hour allowed by the user
+          #  X-Expires-After:
+          #    type: string
+          #    format: date-time
+          #    description: date in UTC when token expires
+
+responses:
+  UnauthorizedError:
+    description: Authentication failed
+    headers:
+      WWW_Authenticate:
+        type: string
+
