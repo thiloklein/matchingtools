@@ -3,12 +3,12 @@
 
 ## Links
 
-- Documentation(ReDoc): https://matchingtools.org/
-- SwaggerUI: https://matchingtools.org/swagger-ui/
+- Documentation(ReDoc): https://matchingtools.com/
+- SwaggerUI: https://matchingtools.com/swagger-ui/
 - Look full spec:
-    + JSON https://matchingtools.org/swagger.json
-    + YAML https://matchingtools.org/swagger.yaml
-- Preview spec version for branch `[branch]`: https://matchingtools.org/preview/[branch]
+    + JSON https://matchingtools.com/swagger.json
+    + YAML https://matchingtools.com/swagger.yaml
+- Preview spec version for branch `[branch]`: https://matchingtools.com/preview/[branch]
 
 ## Working on specification
 ### Install
