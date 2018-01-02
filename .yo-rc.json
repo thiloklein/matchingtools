@@ -8,6 +8,6 @@
     "splitSpec": false,
     "samples": true,
     "branchPreview": true,
-    "installSwaggerUI": false
+    "installSwaggerUI": true
   }
 }
