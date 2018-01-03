@@ -141,7 +141,7 @@ paths:
         '200':
           description: 'OK'
           examples:
-            'application/json': {"hri_matching": [
+            {"hri_matching": [
               {
                 "college": "Public1",
                 "student": "Kai"
