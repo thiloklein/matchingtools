@@ -11,7 +11,7 @@ basePath: / # Replace with your basePath. Note: SHOULD begin with '/'.
 info:
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: |
-    The **matching tools** API implements matching algorithms using the OpenAPI specification.
+    The **MatchingTools** API implements matching algorithms using the OpenAPI specification.
     # Introduction
     This specification is describing the API in 
     [OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
@@ -54,11 +54,13 @@ consumes:
 # The order of the tags can be used to reflect on their order by the parsing tools.
 tags:
   - name: HRI
-    description: Algorithms for Hospital/Residents (a.k.a. College-Admissions) Problems with incomplete rank order lists
+    description: Deferred Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists.
+  - name: IAA
+    description: Immediate Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists.
   - name: TTC
-    description: Top-Trading-Cycles algorithms for housing markets and land allocation problems
+    description: Top-Trading-Cycles Algorithm for trading indivisible items, e.g. in housing and land markets.
   - name: SRI
-    description: Algorithms for Stable Roomates problems with incomplete rank order lists
+    description: Irving Algorithm for stable roomates problems.
 
 # Security scheme definitions that can be used across the specification.
 securityDefinitions:
@@ -72,45 +74,57 @@ security:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
-  '/ma':
+  '/hri/demo':
     post:
+      security:
+        - basic_auth: []
       tags:
         - HRI
-      summary: Gale-Shapley Algorithm for the Hospital/Residents (a.k.a. College-Admissions) Problems with incomplete rank order lists
-      description: ...
-      operationId: ma
+      summary: Deferred Acceptance Algorithm for hospital/residents problems 
+      operationId: hri_demo
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      description: 'Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
       parameters:
-        - name: message
-          in: body
-          description: 'Echo payload'
-          required: true
-          schema:
-            type: string
-            example: 'Hello world!'
+      - in: "body"
+        name: "body"
+        description: "Specification of the HRI Instance"
+        required: true
+        schema:
+          $ref: "#/definitions/hri"
+      - in: query
+        name: "matching"
+        type: "string"
+        required: false
+        description: "Type of matching to be returned. Defaults to \"student-optimal\"."
+        enum:
+        - "student-optimal"
+        - "college-optimal"
+        - "median-stable"
       responses:
         '401':
           $ref: "#/responses/UnauthorizedError"
+        405:
+          description: "Invalid input"
         '200':
           description: 'OK'
           examples:
-            'application/json': {"rangliste_bewerber": {
-                "Lea": ["Stadt 2"],
-                "Mia": ["Privat",  "Stadt 2", "Stadt 1"],
-                "Kai": ["Stadt 1", "Stadt 2", "Privat"]
+            'application/json': {"hri_matching": [
+              {
+                "college": "Public1",
+                "student": "Kai"
               },
-              "rangliste_kita": {
-                "Stadt 1": ["Lea", "Kai", "Mia"],
-                "Stadt 2": ["Lea", "Kai", "Mia"],
-                "Privat":  ["Kai", "Mia", "Lea"]
+              {
+                "college": "Public2",
+                "student": "Lea"
               },
-              "kapazitaet_kita": {
-                "Stadt 1": 1,
-                "Stadt 2": 1,
-                "Privat":  1 
-              }
+              {
+                "college": "Private",
+                "student": "Mia"
+              }]
             }
-          schema:
-            type: file
           # docuemnt headers for this repsonse
           #headers:
           #  X-Rate-Limit: # Header name
@@ -125,7 +139,46 @@ paths:
 responses:
   UnauthorizedError:
     description: Authentication failed
-    headers:
-      WWW_Authenticate:
-        type: string
+    #headers:
+    #  WWW_Authenticate:
+    #    type: string
+
+definitions:
+  hri:
+    type: "object"
+    required:
+    - "student_prefs"
+    - "college_prefs"
+    - "college_capacity"
+    properties:
+      student_prefs:
+        type: "array"
+        items:
+          type: "string"
+          example: {
+              "Lea": ["Public2"],
+              "Mia": ["Private", "Public2", "Public1"],
+              "Kai": ["Public1", "Public2", "Private"]
+            }
+          description: "..."
+      college_prefs:
+        type: "array"
+        items:
+          type: "string"
+          example: {
+              "Public1": ["Lea", "Kai", "Mia"],
+              "Public2": ["Lea", "Kai", "Mia"],
+              "Private": ["Kai", "Mia", "Lea"]
+            }
+      college_capacity:
+        type: "array"
+        items:
+          type: "integer"
+          example: {
+              "Public1": 1,
+              "Public2": 1,
+              "Private": 1
+            }
+
+
 
