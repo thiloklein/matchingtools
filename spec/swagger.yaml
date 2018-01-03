@@ -46,8 +46,7 @@ produces:
   #- text/csv
 consumes:
   # List of mime types your API endpoins consumes.
-  - multipart/form-data
-  #- application/json
+  - application/json
   #- application/xml
   #- text/csv
 
@@ -75,6 +74,24 @@ security:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
+  '/hri/sum':
+    post:
+      security:
+        - basic_auth: []
+      consumes:
+        - 'application/json'
+      produces:
+        - 'integer'
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Submit the raw specification in JSON format."
+        required: true
+        schema:
+          $ref: "#/definitions/sum"
+      responses:
+        '200':
+          description: 'OK'
   '/hri/demo':
     post:
       security:
@@ -82,28 +99,33 @@ paths:
       tags:
         - HRI
       summary: Deferred Acceptance Algorithm for hospital/residents problems 
-      operationId: hri_demo
+      operationId: demo
       consumes:
-        - multipart/form-data
+        - 'application/json'
       produces:
         - 'application/json'
       description: 'Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
       parameters:
+      #- in: "formData"
+      #  name: "file"
+      #  type: "file"
+      #  description: "Either upload the HRI specification in a JSON file ..." #
+      #  required: false
       - in: "body"
         name: "body"
-        description: "Specification of the HRI Instance"
+        description: "Submit the raw specification in JSON format."
         required: true
         schema:
           $ref: "#/definitions/hri"
       #- in: query
       #  name: "matching"
       #  type: "string"
-      #  required: false
-      #  description: "Type of matching to be returned. Defaults to \"student-optimal\"."
+      #  required: true
+      #  description: "Type of matching to be returned. Defaults to student-optimal."
       #  enum:
       #  - "student-optimal"
       #  - "college-optimal"
-      #  - "median-stable"
+      #  default: "student-optimal"
       responses:
         '401':
           $ref: "#/responses/UnauthorizedError"
@@ -126,16 +148,6 @@ paths:
                 "student": "Mia"
               }]
             }
-          # docuemnt headers for this repsonse
-          #headers:
-          #  X-Rate-Limit: # Header name
-          #    type: integer # Header value type
-          #    format: int32 # Header value format
-          #    description: calls per hour allowed by the user
-          #  X-Expires-After:
-          #    type: string
-          #    format: date-time
-          #    description: date in UTC when token expires
 
 responses:
   UnauthorizedError:
@@ -145,6 +157,16 @@ responses:
     #    type: string
 
 definitions:
+  sum:
+    type: "object"
+    required:
+    - "a"
+    - "b"
+    properties:
+      a:
+        type: "integer"
+      b:
+        type: "integer"
   hri:
     type: "object"
     required:
