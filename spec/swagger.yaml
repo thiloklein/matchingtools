@@ -81,7 +81,7 @@ paths:
       consumes:
         - 'application/json'
       produces:
-        - 'integer'
+        - 'application/json'
       parameters:
       - in: "body"
         name: "body"
@@ -92,6 +92,13 @@ paths:
       responses:
         '200':
           description: 'OK'
+          schema:
+            type: "object"
+            properties:
+              result:
+                type: "array"
+                items:
+                  type: "integer"
   '/hri/demo':
     post:
       security:
@@ -129,7 +136,7 @@ paths:
       responses:
         '401':
           $ref: "#/responses/UnauthorizedError"
-        405:
+        '405':
           description: "Invalid input"
         '200':
           description: 'OK'
@@ -148,6 +155,13 @@ paths:
                 "student": "Mia"
               }]
             }
+          schema:
+            type: "object"
+            properties:
+              hri_matching:
+                type: "array"
+                items:
+                  type: "string"
 
 responses:
   UnauthorizedError:
