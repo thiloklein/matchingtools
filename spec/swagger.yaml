@@ -46,7 +46,8 @@ produces:
   #- text/csv
 consumes:
   # List of mime types your API endpoins consumes.
-  - application/json
+  - multipart/form-data
+  #- application/json
   #- application/xml
   #- text/csv
 
@@ -83,7 +84,7 @@ paths:
       summary: Deferred Acceptance Algorithm for hospital/residents problems 
       operationId: hri_demo
       consumes:
-        - 'application/json'
+        - multipart/form-data
       produces:
         - 'application/json'
       description: 'Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
@@ -178,7 +179,7 @@ definitions:
               "Public1": 1,
               "Public2": 1,
               "Private": 1
-            }
+          }
 
 
 
