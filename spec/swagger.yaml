@@ -94,15 +94,15 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/hri"
-      - in: query
-        name: "matching"
-        type: "string"
-        required: false
-        description: "Type of matching to be returned. Defaults to \"student-optimal\"."
-        enum:
-        - "student-optimal"
-        - "college-optimal"
-        - "median-stable"
+      #- in: query
+      #  name: "matching"
+      #  type: "string"
+      #  required: false
+      #  description: "Type of matching to be returned. Defaults to \"student-optimal\"."
+      #  enum:
+      #  - "student-optimal"
+      #  - "college-optimal"
+      #  - "median-stable"
       responses:
         '401':
           $ref: "#/responses/UnauthorizedError"
