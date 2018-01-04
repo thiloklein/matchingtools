@@ -76,8 +76,6 @@ security:
 paths:
   '/sum':
     post:
-      security:
-        - basic_auth: []
       tags:
         - HRI
       operationId: sum
@@ -94,6 +92,10 @@ paths:
           headers:
             Access-Control-Allow-Headers:
               type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
           schema:
             type: "object"
             properties:
@@ -101,10 +103,21 @@ paths:
                 type: "array"
                 items:
                   type: "integer"
+    options:
+      tags:
+        - HRI
+      responses:
+        '200':
+          description: 'OK'
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
   '/demo':
     post:
-      security:
-        - basic_auth: []
       tags:
         - HRI
       summary: Deferred Acceptance Algorithm for hospital/residents problems 
