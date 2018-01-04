@@ -78,17 +78,16 @@ paths:
     post:
       security:
         - basic_auth: []
-      #consumes:
-      #  - 'application/json'
-      #produces:
-      #  - 'application/json'
+      tags:
+        - HRI
+      operationId: sum
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Submit the raw specification in JSON format."
-        required: true
-        schema:
-          $ref: "#/definitions/sum"
+        - in: "body"
+          name: "body"
+          description: "Submit the raw specification in JSON format."
+          required: true
+          schema:
+            $ref: "#/definitions/sum"
       responses:
         '200':
           description: 'OK'
@@ -107,10 +106,6 @@ paths:
         - HRI
       summary: Deferred Acceptance Algorithm for hospital/residents problems 
       operationId: demo
-      #consumes:
-      #  - 'application/json'
-      #produces:
-      #  - 'application/json'
       description: 'Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
       parameters:
       #- in: "formData"
@@ -118,12 +113,12 @@ paths:
       #  type: "file"
       #  description: "Either upload the HRI specification in a JSON file ..." #
       #  required: false
-      - in: "body"
-        name: "body"
-        description: "Submit the raw specification in JSON format."
-        required: true
-        schema:
-          $ref: "#/definitions/hri_consumes"
+        - in: "body"
+          name: "body"
+          description: "Submit the raw specification in JSON format."
+          required: true
+          schema:
+            $ref: "#/definitions/hri_consumes"
       #- in: query
       #  name: "matching"
       #  type: "string"
