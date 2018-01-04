@@ -27,7 +27,7 @@ info:
   # It can be any string but it is better to use semantic versioning: http://semver.org/
   # Warning: OpenAPI require version to be string, but without quotation YAML can recognize it as number.
 
-  title: Matching Tools API # Replace with your API title
+  title: MatchingTools API # Replace with your API title
   # Keep it simple. Don't add "API" or verison at the end of the string.
 
   #termsOfService: 'https://example.com/terms/' # [Optional] Replace with an URL to your ToS
@@ -78,10 +78,10 @@ paths:
     post:
       security:
         - basic_auth: []
-      consumes:
-        - 'application/json'
-      produces:
-        - 'application/json'
+      #consumes:
+      #  - 'application/json'
+      #produces:
+      #  - 'application/json'
       parameters:
       - in: "body"
         name: "body"
@@ -107,10 +107,10 @@ paths:
         - HRI
       summary: Deferred Acceptance Algorithm for hospital/residents problems 
       operationId: demo
-      consumes:
-        - 'application/json'
-      produces:
-        - 'application/json'
+      #consumes:
+      #  - 'application/json'
+      #produces:
+      #  - 'application/json'
       description: 'Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
       parameters:
       #- in: "formData"
@@ -123,7 +123,7 @@ paths:
         description: "Submit the raw specification in JSON format."
         required: true
         schema:
-          $ref: "#/definitions/hri"
+          $ref: "#/definitions/hri_consumes"
       #- in: query
       #  name: "matching"
       #  type: "string"
@@ -156,19 +156,14 @@ paths:
               }]
             }
           schema:
-            type: "object"
-            properties:
-              hri_matching:
-                type: "array"
-                items:
-                  type: "string"
+            $ref: "#/definitions/hri_produces"
 
 responses:
   UnauthorizedError:
     description: Authentication failed
-    #headers:
-    #  WWW_Authenticate:
-    #    type: string
+    headers:
+      WWW_Authenticate:
+        type: string
 
 definitions:
   sum:
@@ -181,7 +176,7 @@ definitions:
         type: "integer"
       b:
         type: "integer"
-  hri:
+  hri_consumes:
     type: "object"
     required:
     - "student_prefs"
@@ -216,6 +211,13 @@ definitions:
               "Public2": 1,
               "Private": 1
           }
+  hri_produces:
+    type: "object"
+    properties:
+      hri_matching:
+        type: "array"
+        items:
+          type: "string"
 
 
 
