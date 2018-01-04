@@ -85,7 +85,7 @@ paths:
           description: "Submit the raw specification in JSON format."
           required: true
           schema:
-            $ref: "#/definitions/sum"
+            $ref: "#/definitions/sum_consumes"
       responses:
         '200':
           description: 'OK'
@@ -97,12 +97,7 @@ paths:
             Access-Control-Allow-Origin:
               type: "string"
           schema:
-            type: "object"
-            properties:
-              result:
-                type: "array"
-                items:
-                  type: "integer"
+            $ref: "#/definitions/sum_produces"
     options:
       tags:
         - HRI
@@ -154,6 +149,10 @@ paths:
           headers:
             Access-Control-Allow-Headers:
               type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
           examples:
             {"hri_matching": [
               {
@@ -171,6 +170,19 @@ paths:
             }
           schema:
             $ref: "#/definitions/hri_produces"
+    options:
+      tags:
+        - HRI
+      responses:
+        '200':
+          description: 'OK'
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
 
 responses:
   UnauthorizedError:
@@ -180,7 +192,7 @@ responses:
         type: string
 
 definitions:
-  sum:
+  sum_consumes:
     type: "object"
     required:
     - "a"
@@ -190,6 +202,13 @@ definitions:
         type: "integer"
       b:
         type: "integer"
+  sum_produces:
+    type: "object"
+    properties:
+      result:
+        type: "array"
+        items:
+          type: "integer"
   hri_consumes:
     type: "object"
     required:
