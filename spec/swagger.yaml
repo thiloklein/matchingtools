@@ -7,7 +7,7 @@ swagger: '2.0'
 schemes:
   - https # Remove if your API donsn't support HTTPS
 host: api.matchingtools.org # Replace with your hostname. 
-basePath: / # Replace with your basePath. Note: SHOULD begin with '/'.
+basePath: /hri # Replace with your basePath. Note: SHOULD begin with '/'.
 info:
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: |
@@ -74,7 +74,7 @@ security:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
-  '/hri/sum':
+  '/sum':
     post:
       security:
         - basic_auth: []
@@ -98,7 +98,7 @@ paths:
                 type: "array"
                 items:
                   type: "integer"
-  '/hri/demo':
+  '/demo':
     post:
       security:
         - basic_auth: []
