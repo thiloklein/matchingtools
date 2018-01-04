@@ -91,6 +91,9 @@ paths:
       responses:
         '200':
           description: 'OK'
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
           schema:
             type: "object"
             properties:
@@ -135,6 +138,9 @@ paths:
           description: "Invalid input"
         '200':
           description: 'OK'
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
           examples:
             {"hri_matching": [
               {
