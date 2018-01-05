@@ -99,20 +99,76 @@ paths:
       tags:
         - HRI
       summary: Deferred Acceptance Algorithm for hospital/residents problems 
-      operationId: hri
+      operationId: hri_demo1
       description: 'Deferred Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
       parameters:
-      #- in: "formData"
-      #  name: "file"
-      #  type: "file"
-      #  description: "Either upload the HRI specification in a JSON file ..." #
-      #  required: false
         - in: "body"
           name: "instance"
           description: "SRI specification in JSON format."
           required: true
           schema:
             $ref: "#/definitions/hri_in"
+        - in: query
+          name: "optimum"
+          type: "string"
+          required: true
+          description: "Type of matching to be returned. Defaults to student-optimal."
+          enum:
+          - "student-optimal"
+          - "college-optimal"
+          default: "student-optimal"
+      responses:
+        '401':
+          $ref: "#/responses/UnauthorizedError"
+        '405':
+          description: "Invalid input"
+        '200':
+          description: 'OK'
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
+          examples:
+            {"hri_matching": [
+              {
+                "college": "Public1",
+                "student": "Kai"
+              },
+              {
+                "college": "Public2",
+                "student": "Lea"
+              },
+              {
+                "college": "Private",
+                "student": "Mia"
+              }]
+            }
+          schema:
+            $ref: "#/definitions/hri_out"
+    options:
+      tags:
+        - CORS
+      summary: "CORS settings for hri endpoint"
+      description: "Cross-Origin Resource Sharing (CORS) request for hri endpoint."
+      responses:
+        '200':
+          $ref: "#/responses/Success"
+  '/hri/demo2':
+    post:
+      tags:
+        - HRI
+      summary: Deferred Acceptance Algorithm for hospital/residents problems 
+      operationId: hri_demo2
+      description: 'Deferred Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
+      parameters:
+        - in: "formData"
+          name: "file"
+          type: "file"
+          description: "JSON file upload with HRI specification."
+          required: true
         - in: query
           name: "optimum"
           type: "string"
