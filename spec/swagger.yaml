@@ -74,6 +74,11 @@ security:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
+  '/':
+    options:
+      responses:
+        '200':
+          $ref: "#/responses/Success"
   '/sum':
     post:
       tags:
@@ -85,7 +90,7 @@ paths:
           description: "Submit the raw specification in JSON format."
           required: true
           schema:
-            $ref: "#/definitions/sum_consumes"
+            $ref: "#/definitions/sum_in"
       responses:
         '200':
           description: 'OK'
@@ -97,20 +102,11 @@ paths:
             Access-Control-Allow-Origin:
               type: "string"
           schema:
-            $ref: "#/definitions/sum_produces"
+            $ref: "#/definitions/sum_out"
     options:
-      tags:
-        - HRI
       responses:
         '200':
-          description: 'OK'
-          headers:
-            Access-Control-Allow-Headers:
-              type: "string"
-            Access-Control-Allow-Methods:
-              type: "string"
-            Access-Control-Allow-Origin:
-              type: "string"
+          $ref: "#/responses/Success"
   '/demo':
     post:
       tags:
@@ -129,7 +125,7 @@ paths:
           description: "Submit the raw specification in JSON format."
           required: true
           schema:
-            $ref: "#/definitions/hri_consumes"
+            $ref: "#/definitions/hri_in"
       #- in: query
       #  name: "matching"
       #  type: "string"
@@ -169,20 +165,11 @@ paths:
               }]
             }
           schema:
-            $ref: "#/definitions/hri_produces"
+            $ref: "#/definitions/hri_out"
     options:
-      tags:
-        - HRI
       responses:
         '200':
-          description: 'OK'
-          headers:
-            Access-Control-Allow-Headers:
-              type: "string"
-            Access-Control-Allow-Methods:
-              type: "string"
-            Access-Control-Allow-Origin:
-              type: "string"
+          $ref: "#/responses/Success"
 
 responses:
   UnauthorizedError:
@@ -190,9 +177,18 @@ responses:
     headers:
       WWW_Authenticate:
         type: string
+  Success:
+    description: 'OK'
+    headers:
+      Access-Control-Allow-Headers:
+        type: "string"
+      Access-Control-Allow-Methods:
+        type: "string"
+      Access-Control-Allow-Origin:
+        type: "string"
 
 definitions:
-  sum_consumes:
+  sum_in:
     type: "object"
     required:
     - "a"
@@ -202,14 +198,14 @@ definitions:
         type: "integer"
       b:
         type: "integer"
-  sum_produces:
+  sum_out:
     type: "object"
     properties:
       result:
         type: "array"
         items:
           type: "integer"
-  hri_consumes:
+  hri_in:
     type: "object"
     required:
     - "student_prefs"
@@ -244,7 +240,7 @@ definitions:
               "Public2": 1,
               "Private": 1
           }
-  hri_produces:
+  hri_out:
     type: "object"
     properties:
       hri_matching:
