@@ -42,19 +42,19 @@ info:
 produces:
   # List of mime types your API endpoins can return.
   - application/json
-  - application/xml
-  - text/csv
+  #- application/xml
+  #- text/csv
 consumes:
   # List of mime types your API endpoins consumes.
   - application/json
-  - application/xml
-  - text/csv
+  #- application/xml
+  #- text/csv
 
 # A list of tags used by the specification with additional metadata.
 # The order of the tags can be used to reflect on their order by the parsing tools.
 tags:
   - name: HRI
-    description: Deferred Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists.
+    description: Deferred Acceptance Algorithm for hospital/residents problems
   - name: IAA
     description: Immediate Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists.
   - name: TTC
@@ -76,13 +76,22 @@ security:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
+  '/':
+    options:
+      tags:
+        - CORS
+      summary: "CORS settings for root path"
+      description: "Cross-Origin Resource Sharing (CORS) request for root path."
+      responses:
+        '200':
+          $ref: "#/responses/Success"
   '/hri/demo':
     post:
       tags:
         - HRI
       summary: Deferred Acceptance Algorithm for hospital/residents problems 
       operationId: demo
-      description: 'Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
+      description: 'Deferred Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
       parameters:
       #- in: "formData"
       #  name: "file"
@@ -138,8 +147,8 @@ paths:
     options:
       tags:
         - CORS
-      summary: "CORS settings for path '/demo'"
-      description: "Cross-Origin Resource Sharing (CORS) request for path '/demo'."
+      summary: "CORS settings for path '/hri/demo'"
+      description: "Cross-Origin Resource Sharing (CORS) request for path '/hri/demo'."
       responses:
         '200':
           $ref: "#/responses/Success"
