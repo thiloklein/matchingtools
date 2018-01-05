@@ -32,8 +32,8 @@ info:
 
   #termsOfService: 'https://example.com/terms/' # [Optional] Replace with an URL to your ToS
   contact:
-    email: thilo.klein@zew.de # [Optional] Replace with your contact email
-    #url: 'https://klein.uk' # [Optional] Replace with link to your contact form
+    email: 'info@matchingtools.com' # [Optional] Replace with your contact email
+    #url: 'https://matchingtools.com' # [Optional] Replace with link to your contact form
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
@@ -42,13 +42,13 @@ info:
 produces:
   # List of mime types your API endpoins can return.
   - application/json
-  #- application/xml
-  #- text/csv
+  - application/xml
+  - text/csv
 consumes:
   # List of mime types your API endpoins consumes.
   - application/json
-  #- application/xml
-  #- text/csv
+  - application/xml
+  - text/csv
 
 # A list of tags used by the specification with additional metadata.
 # The order of the tags can be used to reflect on their order by the parsing tools.
@@ -61,6 +61,8 @@ tags:
     description: Top-Trading-Cycles Algorithm for trading indivisible items, e.g. in housing and land markets.
   - name: SRI
     description: Irving Algorithm for stable roomates problems.
+  - name: CORS
+    description: Options requests.
 
 # Security scheme definitions that can be used across the specification.
 securityDefinitions:
@@ -76,6 +78,10 @@ security:
 paths:
   '/':
     options:
+      tags:
+        - CORS
+      summary: "CORS settings for root path"
+      description: "Cross-Origin Resource Sharing (CORS) request for root path."
       responses:
         '200':
           $ref: "#/responses/Success"
@@ -104,6 +110,10 @@ paths:
           schema:
             $ref: "#/definitions/sum_out"
     options:
+      tags:
+        - CORS
+      summary: "CORS settings for path '/sum'"
+      description: "Cross-Origin Resource Sharing (CORS) request for path '/sum'."
       responses:
         '200':
           $ref: "#/responses/Success"
@@ -167,6 +177,10 @@ paths:
           schema:
             $ref: "#/definitions/hri_out"
     options:
+      tags:
+        - CORS
+      summary: "CORS settings for path '/demo'"
+      description: "Cross-Origin Resource Sharing (CORS) request for path '/demo'."
       responses:
         '200':
           $ref: "#/responses/Success"
