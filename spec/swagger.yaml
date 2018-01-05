@@ -85,6 +85,15 @@ paths:
       responses:
         '200':
           $ref: "#/responses/Success"
+  '/hri':
+    options:
+      tags:
+        - CORS
+      summary: "CORS settings for hri method"
+      description: "Cross-Origin Resource Sharing (CORS) request for hri method."
+      responses:
+        '200':
+          $ref: "#/responses/Success"
   '/hri/demo':
     post:
       tags:
@@ -147,8 +156,8 @@ paths:
     options:
       tags:
         - CORS
-      summary: "CORS settings for path '/hri/demo'"
-      description: "Cross-Origin Resource Sharing (CORS) request for path '/hri/demo'."
+      summary: "CORS settings for hri endpoint"
+      description: "Cross-Origin Resource Sharing (CORS) request for hri endpoint."
       responses:
         '200':
           $ref: "#/responses/Success"
