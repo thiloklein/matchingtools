@@ -22,6 +22,8 @@ info:
     code, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can 
     understand and interact with the remote service with a minimal amount of implementation logic. Similar to what
     interfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.
+    
+    [https://matchingtools.com](https://matchingtools.com)
 
   version: '1.0.0' # Your API version
   # It can be any string but it is better to use semantic versioning: http://semver.org/
@@ -68,6 +70,7 @@ tags:
 securityDefinitions:
   basic_auth:  # security definition name (you can name it as you want)
     type: basic
+    description: For these samples, you can use the username:password credentials `mannheim:Exc3llence!` to test the authorization filters.
 
 # To apply Basic auth to the whole API:
 security:
@@ -94,13 +97,21 @@ paths:
       responses:
         '200':
           $ref: "#/responses/Success"
-  '/hri/demo1':
+  '/hri/demo':
     post:
       tags:
         - HRI
       summary: Deferred Acceptance Algorithm for hospital/residents problems 
       operationId: hri_demo1
-      description: 'Deferred Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
+      description: |
+        Deferred Acceptance Algorithm `hri` for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).
+          ```
+          {
+            "grant_type": "client_credentials",
+            "client_id": "95c78ab2-167f-40b8-8bec-8398d4b87454",
+            "client_secret": "35d18dc9-a3dd-4948-b787-063a490b9354"
+          }
+          ```
       parameters:
         - in: "body"
           name: "instance"
@@ -122,67 +133,11 @@ paths:
           $ref: "#/responses/UnauthorizedError"
         '405':
           description: "Invalid input"
-        '200':
-          description: 'OK'
-          headers:
-            Access-Control-Allow-Headers:
-              type: "string"
-            Access-Control-Allow-Methods:
-              type: "string"
-            Access-Control-Allow-Origin:
-              type: "string"
           examples:
-            {"hri_matching": [
-              {
-                "college": "Public1",
-                "student": "Kai"
-              },
-              {
-                "college": "Public2",
-                "student": "Lea"
-              },
-              {
-                "college": "Private",
-                "student": "Mia"
-              }]
+            {
+              "status": 100,
+              "error": "string"
             }
-          schema:
-            $ref: "#/definitions/hri_out"
-    options:
-      tags:
-        - CORS
-      summary: "CORS settings for hri endpoint"
-      description: "Cross-Origin Resource Sharing (CORS) request for hri endpoint."
-      responses:
-        '200':
-          $ref: "#/responses/Success"
-  '/hri/demo2':
-    post:
-      tags:
-        - HRI
-      summary: Deferred Acceptance Algorithm for hospital/residents problems 
-      operationId: hri_demo2
-      description: 'Deferred Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).'
-      parameters:
-        - in: "formData"
-          name: "file"
-          type: "file"
-          description: "JSON file upload with HRI specification."
-          required: true
-        - in: query
-          name: "optimum"
-          type: "string"
-          required: true
-          description: "Type of matching to be returned. Defaults to student-optimal."
-          enum:
-          - "student-optimal"
-          - "college-optimal"
-          default: "student-optimal"
-      responses:
-        '401':
-          $ref: "#/responses/UnauthorizedError"
-        '405':
-          description: "Invalid input"
         '200':
           description: 'OK'
           headers:
@@ -261,6 +216,7 @@ definitions:
               "Public2": ["Lea", "Kai", "Mia"],
               "Private": ["Kai", "Mia", "Lea"]
             }
+          description: "..."
       college_capacity:
         type: "array"
         items:
@@ -270,6 +226,7 @@ definitions:
               "Public2": 1,
               "Private": 1
           }
+          description: "..."
   hri_out:
     type: "object"
     properties:
