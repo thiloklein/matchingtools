@@ -10,20 +10,29 @@ host: api.matchingtools.org # Replace with your hostname.
 basePath: / # Replace with your basePath. Note: SHOULD begin with '/'.
 info:
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
-  description: |
-    The **MatchingTools** API implements matching algorithms using the OpenAPI specification.
-    # Introduction
-    This specification is describing the API in 
-    [OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
+  description: | 
+    MatchingTools is an application programming interface that implements the most commonly used matching algorithms. It is based on the well-documented, tested and trusted software implementation in R package [matchingMarkets](https://matchingmarkets.org). Taking preference lists of market participants as input, the algorithms return stable and/or efficient assignments (or "matchings") in [JSON](https://en.wikipedia.org/wiki/JSON) open standard file format. The documentation below is written using the [OpenAPI/Swagger](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md) specification.
     
-    # OpenAPI Specification
-    The goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which
+    # Scope
+    This API comes with three algorithms:
+    * `HRI`: Deferred Acceptance Algorithm for hospital/residents problems. Finds all stable matchings in two-sided matching markets. Implemented for both the [stable marriage problem](https://en.wikipedia.org/wiki/Stable_marriage_problem) (two-sided one-to-one matching) and the [hospital/residents problem](https://en.wikipedia.org/wiki/Stable_marriage_problem#Similar_problems), also known as college admissions problem (many-to-one matching).    
+    * `SRI`: Irving Algorithm for  [stable roommates problems](https://en.wikipedia.org/wiki/Stable_roommates_problem). Finds all stable matchings in the roommates problem (one-sided matching market).    
+    * `TTC`: Top-Trading-Cycles Algorithm for trading indivisible items, e.g. in housing and land markets. Finds stable matchings in the [housing market problem](https://en.wikipedia.org/wiki/Top_trading_cycle) with existing tenants.  
+    
+    # Goal
+    The OpenAPI/Swagger specification used for this API is a standard, language-agnostic interface to REST APIs which
     allows both humans and computers to discover and understand the capabilities of the service without access to source
-    code, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can 
+    code or documentation. The specification used, should allow users to 
     understand and interact with the remote service with a minimal amount of implementation logic. Similar to what
-    interfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.
+    interfaces have done for lower-level programming, OpenAPI//Swagger removes the guesswork in calling the service.
     
-    [https://matchingtools.com](https://matchingtools.com)
+    # Getting started
+    1. Browse the documentation and try out the [cURL](https://en.wikipedia.org/wiki/CURL) code snippets in the boxes below in your [console](https://en.wikipedia.org/wiki/Command-line_interface).   
+    2. Authenticate for the demo versions using the username:password combination `-u mannheim:Exc3llence!` and select your local data input file in [JSON](https://en.wikipedia.org/wiki/JSON) format `-d @C:\...\myfile.json` following the structure given in the "Request samples" in the rightmost panel.    
+    3. Alternatively, you can fine-tune your settings using the API's [Swagger user interface](https://matchingtools.com/swagger-ui): Select one of the documented algorithms: `HRI`, `SRI` or `TTC`. Authenticate using the red exclamation mark button. Modify and apply the yellow-shaded example input values and "Try it out!".
+
+    # Security
+    MatchingTools uses the HTTPS communication protocol, which is encrypted by Secure Sockets Layer (SSL). This ensures authentication of the API and protection of the privacy and integrity of the exchanged data. The bidirectional encryption of communications between client and server protects against eavesdropping and tampering of the communication. HTTPS connections are now widely used for online payment transactions, e-mail and for sensitive transactions in corporate information systems to secure accounts and keep user communications, identity and web browsing private.
 
   version: '1.0.0' # Your API version
   # It can be any string but it is better to use semantic versioning: http://semver.org/
@@ -37,7 +46,7 @@ info:
     email: 'info@matchingtools.com' # [Optional] Replace with your contact email
     #url: 'https://matchingtools.com' # [Optional] Replace with link to your contact form
   license:
-    name: Apache 2.0
+    name: Apache License 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   x-logo:
     url: 'https://matchingtools.com/logo.png'
@@ -70,7 +79,7 @@ tags:
 securityDefinitions:
   basic_auth:  # security definition name (you can name it as you want)
     type: basic
-    description: For these samples, you can use the username:password credentials `mannheim:Exc3llence!` to test the authorization filters.
+    description: The credentials for the demo versions of this API are the username:password combination `mannheim:Exc3llence!`.
 
 # To apply Basic auth to the whole API:
 security:
@@ -105,6 +114,8 @@ paths:
       operationId: hri_demo
       description: |
         Deferred Acceptance Algorithm for [hospital/residents problems](https://en.wikipedia.org/wiki/Hospital_resident) (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings or the related [stable marriage problem](https://en.wikipedia.org/wiki/Stable_matching). The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).
+        
+        ##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:
           ``` 
           curl -X POST 'https://api.matchingtools.org/hri/demo' --header 'Content-Type: application/json' -u username:password -d @C:\...\hri.json
           ```
@@ -119,7 +130,7 @@ paths:
           name: "optimum"
           type: "string"
           required: true
-          description: "Type of matching to be returned. Defaults to student-optimal."
+          description: "Type of matching to be returned. Defaults to 'student-optimal'."
           enum:
           - "student-optimal"
           - "college-optimal"
@@ -176,6 +187,8 @@ paths:
       operationId: sri_demo
       description: |
         Finds all stable matchings (if one exists) in the [stable roommates problem](https://en.wikipedia.org/wiki/Stable_roommates_problem) with incomplete lists based on given preferences.
+        
+        ##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:
           ``` 
           curl -X POST 'https://api.matchingtools.org/sri/demo' --header 'Content-Type: application/json' -u username:password -d @C:\...\sri.json
           ```
@@ -232,6 +245,8 @@ paths:
       operationId: ttc_demo
       description: |
         Finds the stable matching in the [house allocation problem](https://en.wikipedia.org/wiki/Top_trading_cycle) with existing tenants, e.g. in housing and land markets. Uses the Top-Trading-Cycles Algorithm proposed in Abdulkadiroglu and Sonmez (1999).
+        
+        ##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:
           ``` 
           curl -X POST 'https://api.matchingtools.org/ttc/demo' --header 'Content-Type: application/json' -u username:password -d @C:\...\ttc.json
           ```
