@@ -1,0 +1,10 @@
+{
+
+  "student_prefs": [{
+    
+    "Lea": ["Kai"],
+    "Mia": ["Lea", "Kai"],
+    "Kai": ["Mia", "Lea"]
+    
+  }]
+}

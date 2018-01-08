@@ -1,0 +1,18 @@
+{
+
+  "student_prefs": [{
+    
+    "Lea": ["Public2"],
+    "Mia": ["Private", "Public1"],
+    "Kai": ["Public1", "Private"]
+    
+  }],
+  
+  "initial_allocations": [{
+    "Lea": "Private",
+    "Mia": "Public1",
+    "Kai": "Public2"
+    
+  }]
+
+}

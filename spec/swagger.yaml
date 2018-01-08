@@ -105,12 +105,8 @@ paths:
       operationId: hri_demo1
       description: |
         Deferred Acceptance Algorithm `hri` for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).
-          ```
-          {
-            "grant_type": "client_credentials",
-            "client_id": "95c78ab2-167f-40b8-8bec-8398d4b87454",
-            "client_secret": "35d18dc9-a3dd-4948-b787-063a490b9354"
-          }
+          ``` 
+          curl -X POST -u mannheim:Exc3llence! --header 'Content-Type: application/json' -d @C:\...\example_hri.json 'https://api.matchingtools.org/hri/demo' 
           ```
       parameters:
         - in: "body"
