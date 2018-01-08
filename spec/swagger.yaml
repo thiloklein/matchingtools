@@ -72,8 +72,8 @@ tags:
     description: Algorithm for stable roomates problems
   - name: TTC
     description: Algorithm for trading indivisible items
-  - name: CORS
-    description: Options requests.
+  #- name: CORS
+  #  description: Options requests.
 
 # Security scheme definitions that can be used across the specification.
 securityDefinitions:
@@ -171,14 +171,14 @@ paths:
             }
           schema:
             $ref: "#/definitions/hri_out"
-    options:
-      tags:
-        - CORS
-      summary: "CORS settings for hri endpoint"
-      description: "Cross-Origin Resource Sharing (CORS) request for hri endpoint."
-      responses:
-        '200':
-          $ref: "#/responses/Success"
+    #options:
+    #  tags:
+    #    - CORS
+    #  summary: "CORS settings for hri endpoint"
+    #  description: "Cross-Origin Resource Sharing (CORS) request for hri endpoint."
+    #  responses:
+    #    '200':
+    #      $ref: "#/responses/Success"
   '/sri/demo':
     post:
       tags:
@@ -229,14 +229,14 @@ paths:
             }
           schema:
             $ref: "#/definitions/sri_out"
-    options:
-      tags:
-        - CORS
-      summary: "CORS settings for sri endpoint"
-      description: "Cross-Origin Resource Sharing (CORS) request for sri endpoint."
-      responses:
-        '200':
-          $ref: "#/responses/Success"
+    #options:
+    #  tags:
+    #    - CORS
+    #  summary: "CORS settings for sri endpoint"
+    #  description: "Cross-Origin Resource Sharing (CORS) request for sri endpoint."
+    #  responses:
+    #    '200':
+    #      $ref: "#/responses/Success"
   '/ttc/demo':
     post:
       tags:
@@ -293,14 +293,14 @@ paths:
             }
           schema:
             $ref: "#/definitions/ttc_out"
-    options:
-      tags:
-        - CORS
-      summary: "CORS settings for ttc endpoint"
-      description: "Cross-Origin Resource Sharing (CORS) request for ttc endpoint."
-      responses:
-        '200':
-          $ref: "#/responses/Success"
+    #options:
+    #  tags:
+    #    - CORS
+    #  summary: "CORS settings for ttc endpoint"
+    #  description: "Cross-Origin Resource Sharing (CORS) request for ttc endpoint."
+    #  responses:
+    #    '200':
+    #      $ref: "#/responses/Success"
           
 responses:
   UnauthorizedError:
@@ -308,15 +308,15 @@ responses:
     headers:
       WWW_Authenticate:
         type: string
-  Success:
-    description: 'OK'
-    headers:
-      Access-Control-Allow-Headers:
-        type: "string"
-      Access-Control-Allow-Methods:
-        type: "string"
-      Access-Control-Allow-Origin:
-        type: "string"
+  #Success:
+  #  description: 'OK'
+  #  headers:
+  #    Access-Control-Allow-Headers:
+  #      type: "string"
+  #    Access-Control-Allow-Methods:
+  #      type: "string"
+  #    Access-Control-Allow-Origin:
+  #      type: "string"
 
 definitions:
   hri_in:
