@@ -29,7 +29,7 @@ info:
     # Getting started
     1. Browse the documentation and try out the [cURL](https://en.wikipedia.org/wiki/CURL) code snippets in the boxes below in your [console](https://en.wikipedia.org/wiki/Command-line_interface).   
     2. Authenticate for the demo versions using the username:password combination `-u mannheim:Exc3llence!` and select your local data input file in [JSON](https://en.wikipedia.org/wiki/JSON) format `-d @C:\...\myfile.json` following the structure given in the "Request samples" in the rightmost panel.    
-    3. Alternatively, you can fine-tune your settings using the API's [Swagger user interface](https://matchingtools.com/swagger-ui): Select one of the documented algorithms: `HRI`, `SRI` or `TTC`. Authenticate using the red exclamation mark button. Modify and apply the yellow-shaded example input values and "Try it out!".
+    3. Alternatively, fine-tune your settings and interactively test your responses using the API's [Swagger user interface](https://matchingtools.com/swagger-ui): Select one of the documented algorithms: `HRI`, `SRI` or `TTC`. Authenticate using the red exclamation mark button. Modify and apply the yellow-shaded example input values and "Try it out!".
 
     # Security
     MatchingTools uses the HTTPS communication protocol, which is encrypted by Secure Sockets Layer (SSL). This ensures authentication of the API and protection of the privacy and integrity of the exchanged data. The bidirectional encryption of communications between client and server protects against eavesdropping and tampering of the communication. HTTPS connections are now widely used for online payment transactions, e-mail and for sensitive transactions in corporate information systems to secure accounts and keep user communications, identity and web browsing private.
@@ -88,24 +88,24 @@ security:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
-  '/':
-    options:
-      tags:
-        - CORS
-      summary: "CORS settings for root path"
-      description: "Cross-Origin Resource Sharing (CORS) request for root path."
-      responses:
-        '200':
-          $ref: "#/responses/Success"
-  '/hri':
-    options:
-      tags:
-        - CORS
-      summary: "CORS settings for hri method"
-      description: "Cross-Origin Resource Sharing (CORS) request for hri method."
-      responses:
-        '200':
-          $ref: "#/responses/Success"
+  #'/':
+  #  options:
+  #    tags:
+  #      - CORS
+  #    summary: "CORS settings for root path"
+  #    description: "Cross-Origin Resource Sharing (CORS) request for root path."
+  #    responses:
+  #      '200':
+  #        $ref: "#/responses/Success"
+  #'/hri':
+  #  options:
+  #    tags:
+  #      - CORS
+  #    summary: "CORS settings for hri method"
+  #    description: "Cross-Origin Resource Sharing (CORS) request for hri method."
+  #    responses:
+  #      '200':
+  #        $ref: "#/responses/Success"
   '/hri/demo':
     post:
       tags:
