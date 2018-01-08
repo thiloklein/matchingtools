@@ -56,13 +56,13 @@ consumes:
 # The order of the tags can be used to reflect on their order by the parsing tools.
 tags:
   - name: HRI
-    description: Deferred Acceptance Algorithm for hospital/residents problems
-  - name: IAA
-    description: Immediate Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists.
-  - name: TTC
-    description: Top-Trading-Cycles Algorithm for trading indivisible items, e.g. in housing and land markets.
+    description: Algorithm for hospital/residents problems
+#  - name: IAA
+#    description: Immediate Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists.
   - name: SRI
-    description: Irving Algorithm for stable roomates problems.
+    description: Algorithm for stable roomates problems
+  - name: TTC
+    description: Algorithm for trading indivisible items
   - name: CORS
     description: Options requests.
 
@@ -102,16 +102,16 @@ paths:
       tags:
         - HRI
       summary: Deferred Acceptance Algorithm for hospital/residents problems 
-      operationId: hri_demo1
+      operationId: hri_demo
       description: |
-        Deferred Acceptance Algorithm `hri` for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings in the hospital/residents problem (a.k.a. college admissions problem) or the related stable marriage problem. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).
+        Deferred Acceptance Algorithm for [hospital/residents problems](https://en.wikipedia.org/wiki/Hospital_resident) (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings or the related [stable marriage problem](https://en.wikipedia.org/wiki/Stable_matching). The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).
           ``` 
-          curl -X POST -u mannheim:Exc3llence! --header 'Content-Type: application/json' -d @C:\...\example_hri.json 'https://api.matchingtools.org/hri/demo' 
+          curl -X POST 'https://api.matchingtools.org/hri/demo' --header 'Content-Type: application/json' -u username:password -d @C:\...\hri.json
           ```
       parameters:
         - in: "body"
           name: "instance"
-          description: "SRI specification in JSON format."
+          description: "HRI specification in JSON format."
           required: true
           schema:
             $ref: "#/definitions/hri_in"
@@ -168,7 +168,125 @@ paths:
       responses:
         '200':
           $ref: "#/responses/Success"
-
+  '/sri/demo':
+    post:
+      tags:
+        - SRI
+      summary: Irving Algorithm for stable roomates problems
+      operationId: sri_demo
+      description: |
+        Finds all stable matchings (if one exists) in the [stable roommates problem](https://en.wikipedia.org/wiki/Stable_roommates_problem) with incomplete lists based on given preferences.
+          ``` 
+          curl -X POST 'https://api.matchingtools.org/sri/demo' --header 'Content-Type: application/json' -u username:password -d @C:\...\sri.json
+          ```
+      parameters:
+        - in: "body"
+          name: "instance"
+          description: "SRI specification in JSON format."
+          required: true
+          schema:
+            $ref: "#/definitions/sri_in"
+      responses:
+        '401':
+          $ref: "#/responses/UnauthorizedError"
+        '405':
+          description: "Invalid input"
+          examples:
+            {
+              "status": 100,
+              "error": "string"
+            }
+        '200':
+          description: 'OK'
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
+          examples:
+            {"sri_matching": {
+              "1": [
+                {
+                  "student_1": "Mia",
+                  "student_2": "Kai"
+                }
+              ]}
+            }
+          schema:
+            $ref: "#/definitions/sri_out"
+    options:
+      tags:
+        - CORS
+      summary: "CORS settings for sri endpoint"
+      description: "Cross-Origin Resource Sharing (CORS) request for sri endpoint."
+      responses:
+        '200':
+          $ref: "#/responses/Success"
+  '/ttc/demo':
+    post:
+      tags:
+        - TTC
+      summary: Top-Trading-Cycles Algorithm for trading indivisible items
+      operationId: ttc_demo
+      description: |
+        Finds the stable matching in the [house allocation problem](https://en.wikipedia.org/wiki/Top_trading_cycle) with existing tenants, e.g. in housing and land markets. Uses the Top-Trading-Cycles Algorithm proposed in Abdulkadiroglu and Sonmez (1999).
+          ``` 
+          curl -X POST 'https://api.matchingtools.org/ttc/demo' --header 'Content-Type: application/json' -u username:password -d @C:\...\ttc.json
+          ```
+      parameters:
+        - in: "body"
+          name: "instance"
+          description: "TTC specification in JSON format."
+          required: true
+          schema:
+            $ref: "#/definitions/ttc_in"
+      responses:
+        '401':
+          $ref: "#/responses/UnauthorizedError"
+        '405':
+          description: "Invalid input"
+          examples:
+            {
+              "status": 100,
+              "error": "string"
+            }
+        '200':
+          description: 'OK'
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
+          examples:
+            {"ttc_matching": [
+              {
+                "college": "Public2",
+                "student": "Lea"
+              },
+              {
+                "college": "Private",
+                "student": "Mia"
+              },
+              {
+                "college": "Public1",
+                "student": "Kai"
+              }]
+            }
+          schema:
+            $ref: "#/definitions/ttc_out"
+    options:
+      tags:
+        - CORS
+      summary: "CORS settings for ttc endpoint"
+      description: "Cross-Origin Resource Sharing (CORS) request for ttc endpoint."
+      responses:
+        '200':
+          $ref: "#/responses/Success"
+          
 responses:
   UnauthorizedError:
     description: Authentication failed
@@ -201,7 +319,7 @@ definitions:
               "Lea": ["Public2"],
               "Mia": ["Private", "Public2", "Public1"],
               "Kai": ["Public1", "Public2", "Private"]
-            }
+          }
           description: "..."
       college_prefs:
         type: "array"
@@ -230,6 +348,62 @@ definitions:
         type: "array"
         items:
           type: "string"
-
+  sri_in:
+    type: "object"
+    required:
+    - "student_prefs"
+    properties:
+      student_prefs:
+        type: "array"
+        items:
+          type: "string"
+          example: {
+              "Lea": ["Kai"],
+              "Mia": ["Lea", "Kai"],
+              "Kai": ["Mia", "Lea"]
+          }
+          description: "..."
+  sri_out:
+    type: "object"
+    properties:
+      sri_matching:
+        type: "array"
+        items:
+          type: "array"
+          items:
+            type: "string"
+  ttc_in:
+    type: "object"
+    required:
+    - "student_prefs"
+    - "initial_allocations"
+    properties:
+      student_prefs:
+        type: "array"
+        items:
+          type: "string"
+          example: {
+              "Lea": ["Public2"],
+              "Mia": ["Private", "Public1"],
+              "Kai": ["Public1", "Private"]
+          }
+          description: "..."
+      initial_allocations:
+        type: "array"
+        items:
+          type: "string"
+          example: {
+              "Lea": "Private",
+              "Mia": "Public1",
+              "Kai": "Public2"
+            }
+          description: "..."
+  ttc_out:
+    type: "object"
+    properties:
+      hri_matching:
+        type: "array"
+        items:
+          type: "string"
 
 
