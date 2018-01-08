@@ -147,13 +147,13 @@ paths:
             }
         '200':
           description: 'OK'
-          headers:
-            Access-Control-Allow-Headers:
-              type: "string"
-            Access-Control-Allow-Methods:
-              type: "string"
-            Access-Control-Allow-Origin:
-              type: "string"
+          #headers:
+          #  Access-Control-Allow-Headers:
+          #    type: "string"
+          #  Access-Control-Allow-Methods:
+          #    type: "string"
+          #  Access-Control-Allow-Origin:
+          #    type: "string"
           examples:
             {"hri_matching": [
               {
@@ -211,13 +211,13 @@ paths:
             }
         '200':
           description: 'OK'
-          headers:
-            Access-Control-Allow-Headers:
-              type: "string"
-            Access-Control-Allow-Methods:
-              type: "string"
-            Access-Control-Allow-Origin:
-              type: "string"
+          #headers:
+          #  Access-Control-Allow-Headers:
+          #    type: "string"
+          #  Access-Control-Allow-Methods:
+          #    type: "string"
+          #  Access-Control-Allow-Origin:
+          #    type: "string"
           examples:
             {"sri_matching": {
               "1": [
@@ -269,13 +269,13 @@ paths:
             }
         '200':
           description: 'OK'
-          headers:
-            Access-Control-Allow-Headers:
-              type: "string"
-            Access-Control-Allow-Methods:
-              type: "string"
-            Access-Control-Allow-Origin:
-              type: "string"
+          #headers:
+          #  Access-Control-Allow-Headers:
+          #    type: "string"
+          #  Access-Control-Allow-Methods:
+          #    type: "string"
+          #  Access-Control-Allow-Origin:
+          #    type: "string"
           examples:
             {"ttc_matching": [
               {
