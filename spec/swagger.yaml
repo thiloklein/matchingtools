@@ -11,7 +11,7 @@ basePath: / # Replace with your basePath. Note: SHOULD begin with '/'.
 info:
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: | 
-    MatchingTools is an application programming interface that implements the most commonly used matching algorithms. It is based on the well-documented, tested and trusted software implementation in R package [matchingMarkets](https://matchingmarkets.org). Taking preference lists of market participants as input, the algorithms return stable and/or efficient assignments (or "matchings") in [JSON](https://en.wikipedia.org/wiki/JSON) open standard file format. The documentation below is written using the [OpenAPI/Swagger](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md) specification.
+    MatchingTools is an application programming interface that implements the most commonly used matching algorithms. It is based on the well-documented, tried and tested software implementation in R package [matchingMarkets](https://matchingmarkets.org). Taking preference lists of market participants as input, the algorithms return stable and/or efficient assignments (or "matchings") in [JSON](https://en.wikipedia.org/wiki/JSON) open standard file format. The documentation below is written using the [OpenAPI/Swagger](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md) specification.
     
     # Scope
     This API comes with three algorithms:
@@ -72,8 +72,6 @@ tags:
     description: Algorithm for stable roomates problems
   - name: TTC
     description: Algorithm for trading indivisible items
-  #- name: CORS
-  #  description: Options requests.
 
 # Security scheme definitions that can be used across the specification.
 securityDefinitions:
@@ -88,24 +86,6 @@ security:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
-  #'/':
-  #  options:
-  #    tags:
-  #      - CORS
-  #    summary: "CORS settings for root path"
-  #    description: "Cross-Origin Resource Sharing (CORS) request for root path."
-  #    responses:
-  #      '200':
-  #        $ref: "#/responses/Success"
-  #'/hri':
-  #  options:
-  #    tags:
-  #      - CORS
-  #    summary: "CORS settings for hri method"
-  #    description: "Cross-Origin Resource Sharing (CORS) request for hri method."
-  #    responses:
-  #      '200':
-  #        $ref: "#/responses/Success"
   '/hri/demo':
     post:
       tags:
@@ -147,13 +127,6 @@ paths:
             }
         '200':
           description: 'OK'
-          #headers:
-          #  Access-Control-Allow-Headers:
-          #    type: "string"
-          #  Access-Control-Allow-Methods:
-          #    type: "string"
-          #  Access-Control-Allow-Origin:
-          #    type: "string"
           examples:
             {"hri_matching": [
               {
@@ -171,14 +144,6 @@ paths:
             }
           schema:
             $ref: "#/definitions/hri_out"
-    #options:
-    #  tags:
-    #    - CORS
-    #  summary: "CORS settings for hri endpoint"
-    #  description: "Cross-Origin Resource Sharing (CORS) request for hri endpoint."
-    #  responses:
-    #    '200':
-    #      $ref: "#/responses/Success"
   '/sri/demo':
     post:
       tags:
@@ -211,13 +176,6 @@ paths:
             }
         '200':
           description: 'OK'
-          #headers:
-          #  Access-Control-Allow-Headers:
-          #    type: "string"
-          #  Access-Control-Allow-Methods:
-          #    type: "string"
-          #  Access-Control-Allow-Origin:
-          #    type: "string"
           examples:
             {"sri_matching": {
               "1": [
@@ -229,14 +187,6 @@ paths:
             }
           schema:
             $ref: "#/definitions/sri_out"
-    #options:
-    #  tags:
-    #    - CORS
-    #  summary: "CORS settings for sri endpoint"
-    #  description: "Cross-Origin Resource Sharing (CORS) request for sri endpoint."
-    #  responses:
-    #    '200':
-    #      $ref: "#/responses/Success"
   '/ttc/demo':
     post:
       tags:
@@ -269,13 +219,6 @@ paths:
             }
         '200':
           description: 'OK'
-          #headers:
-          #  Access-Control-Allow-Headers:
-          #    type: "string"
-          #  Access-Control-Allow-Methods:
-          #    type: "string"
-          #  Access-Control-Allow-Origin:
-          #    type: "string"
           examples:
             {"ttc_matching": [
               {
@@ -293,14 +236,6 @@ paths:
             }
           schema:
             $ref: "#/definitions/ttc_out"
-    #options:
-    #  tags:
-    #    - CORS
-    #  summary: "CORS settings for ttc endpoint"
-    #  description: "Cross-Origin Resource Sharing (CORS) request for ttc endpoint."
-    #  responses:
-    #    '200':
-    #      $ref: "#/responses/Success"
           
 responses:
   UnauthorizedError:
@@ -308,15 +243,6 @@ responses:
     headers:
       WWW_Authenticate:
         type: string
-  #Success:
-  #  description: 'OK'
-  #  headers:
-  #    Access-Control-Allow-Headers:
-  #      type: "string"
-  #    Access-Control-Allow-Methods:
-  #      type: "string"
-  #    Access-Control-Allow-Origin:
-  #      type: "string"
 
 definitions:
   hri_in:
