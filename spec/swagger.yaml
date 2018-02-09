@@ -24,11 +24,11 @@ info:
     allows both humans and computers to discover and understand the capabilities of the service without access to source
     code or documentation. The specification used, should allow users to 
     understand and interact with the remote service with a minimal amount of implementation logic. Similar to what
-    interfaces have done for lower-level programming, OpenAPI//Swagger removes the guesswork in calling the service.
+    interfaces have done for lower-level programming, OpenAPI/Swagger removes the guesswork in calling the service.
     
     # Getting started
     1. Browse the documentation and try out the [cURL](https://en.wikipedia.org/wiki/CURL) code snippets in the boxes below in your [console](https://en.wikipedia.org/wiki/Command-line_interface).   
-    2. Authenticate for the demo versions using the username:password combination `-u mannheim:Exc3llence!` and select your local data input file in [JSON](https://en.wikipedia.org/wiki/JSON) format `-d @C:\...\myfile.json` following the structure given in the "Request samples" in the rightmost panel.    
+    2. Authenticate for the demo versions using the username:password combination `-u mannheim:Exc3llence!` and select your local data input file in [JSON](https://en.wikipedia.org/wiki/JSON) format `-d @'C:\...\myfile.json'` following the structure given in the "Request samples" in the rightmost panel.    
     3. Alternatively, fine-tune your settings and interactively test your responses using the API's [Swagger user interface](https://matchingtools.com/swagger-ui): Select one of the documented algorithms: `HRI`, `SRI` or `TTC`. Authenticate using the red exclamation mark button. Modify and apply the yellow-shaded example input values and "Try it out!".
 
     # Security
@@ -97,7 +97,7 @@ paths:
         
         ##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:
           ``` 
-          curl -X POST 'https://api.matchingtools.org/hri/demo' --header 'Content-Type: application/json' -u username:password -d @C:\...\hri.json
+          curl -X POST 'https://api.matchingtools.org/hri/demo' --header 'Content-Type: application/json' -u username:password -d @'C:\...\hri.json'
           ```
       parameters:
         - in: "body"
@@ -155,7 +155,7 @@ paths:
         
         ##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:
           ``` 
-          curl -X POST 'https://api.matchingtools.org/sri/demo' --header 'Content-Type: application/json' -u username:password -d @C:\...\sri.json
+          curl -X POST 'https://api.matchingtools.org/sri/demo' --header 'Content-Type: application/json' -u username:password -d @'C:\...\sri.json'
           ```
       parameters:
         - in: "body"
@@ -198,7 +198,7 @@ paths:
         
         ##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:
           ``` 
-          curl -X POST 'https://api.matchingtools.org/ttc/demo' --header 'Content-Type: application/json' -u username:password -d @C:\...\ttc.json
+          curl -X POST 'https://api.matchingtools.org/ttc/demo' --header 'Content-Type: application/json' -u username:password -d @'C:\...\ttc.json'
           ```
       parameters:
         - in: "body"
