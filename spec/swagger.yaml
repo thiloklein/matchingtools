@@ -11,7 +11,7 @@ basePath: / # Replace with your basePath. Note: SHOULD begin with '/'.
 info:
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: | 
-    MatchingTools is an application programming interface that implements the most commonly used matching algorithms. It is based on the well-documented, tried and tested software implementation in R package [matchingMarkets](https://matchingmarkets.org). Taking preference lists of market participants as input, the algorithms return stable and/or efficient assignments (or "matchings") in [JSON](https://en.wikipedia.org/wiki/JSON) open standard file format. The documentation below is written using the [OpenAPI/Swagger](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md) specification.
+    MatchingTools is an application programming interface that implements the most commonly used matching algorithms. It is based on the well-documented, tried and tested software implementation in R package [matchingMarkets](https://CRAN.R-project.org/package=matchingMarkets) on the Comprehensive R Archive Network (CRAN). Taking preference lists of market participants as input, the algorithms return stable and/or efficient assignments (or "matchings") in [JSON](https://en.wikipedia.org/wiki/JSON) open standard file format. The documentation below is written using the [OpenAPI/Swagger](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md) specification.
     
     # Scope
     This API comes with three algorithms:
