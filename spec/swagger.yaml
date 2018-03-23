@@ -17,7 +17,7 @@ info:
     This API comes with three algorithms:
     * `HRI`: Deferred Acceptance Algorithm for hospital/residents problems. Finds all stable matchings in two-sided matching markets. Implemented for both the [stable marriage problem](https://en.wikipedia.org/wiki/Stable_marriage_problem) (two-sided one-to-one matching) and the [hospital/residents problem](https://en.wikipedia.org/wiki/Stable_marriage_problem#Similar_problems), also known as college admissions problem (many-to-one matching).    
     * `SRI`: Irving Algorithm for  [stable roommates problems](https://en.wikipedia.org/wiki/Stable_roommates_problem). Finds all stable matchings in the roommates problem (one-sided matching market).    
-    * `TTC`: Top-Trading-Cycles Algorithm for trading indivisible items, e.g. in housing and land markets. Finds stable matchings in the [housing market problem](https://en.wikipedia.org/wiki/Top_trading_cycle) with existing tenants.  
+    * `TTC`: Top-Trading-Cycles Algorithm for trading indivisible items, e.g. in housing and land markets. Finds stable matchings in the [housing market problem](https://en.wikipedia.org/wiki/Top_trading_cycle) with existing tenants.
     
     # Goal
     The OpenAPI/Swagger specification used for this API is a standard, language-agnostic interface to REST APIs which
