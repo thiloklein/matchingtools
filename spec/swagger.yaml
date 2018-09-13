@@ -14,9 +14,10 @@ info:
     MatchingTools is an application programming interface that implements the most commonly used matching algorithms. It is based on the well-documented, tried and tested software implementation in R package [matchingMarkets](https://CRAN.R-project.org/package=matchingMarkets) on the Comprehensive R Archive Network (CRAN). Taking preference lists of market participants as input, the algorithms return stable and/or efficient assignments (or "matchings") in [JSON](https://en.wikipedia.org/wiki/JSON) open standard file format. The documentation below is written using the [OpenAPI/Swagger](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md) specification.
     
     # Scope
-    This API comes with three algorithms:
-    * `HRI`: Deferred Acceptance Algorithm for hospital/residents problems. Finds all stable matchings in two-sided matching markets. Implemented for both the [stable marriage problem](https://en.wikipedia.org/wiki/Stable_marriage_problem) (two-sided one-to-one matching) and the [hospital/residents problem](https://en.wikipedia.org/wiki/Stable_marriage_problem#Similar_problems), also known as college admissions problem (many-to-one matching).    
-    * `SRI`: Irving Algorithm for  [stable roommates problems](https://en.wikipedia.org/wiki/Stable_roommates_problem). Finds all stable matchings in the roommates problem (one-sided matching market).    
+    This API comes with four algorithms:
+    * `HRI`: Deferred Acceptance Algorithm for hospital/residents problems. Finds all stable matchings in two-sided matching markets. Implemented for both the [stable marriage problem](https://en.wikipedia.org/wiki/Stable_marriage_problem) (two-sided one-to-one matching) and the [hospital/residents problem](https://en.wikipedia.org/wiki/Stable_marriage_problem#Similar_problems), also known as college admissions problem (many-to-one matching).
+    * `HRI2`: Roth Peranson Algorithm for hospital/residents problems. Finds the resident-optimal stable matching in two-sided matching markets with couples.
+    * `SRI`: Irving Algorithm for  [stable roommates problems](https://en.wikipedia.org/wiki/Stable_roommates_problem). Finds all stable matchings in the roommates problem (one-sided matching market).
     * `TTC`: Top-Trading-Cycles Algorithm for trading indivisible items, e.g. in housing and land markets. Finds stable matchings in the [housing market problem](https://en.wikipedia.org/wiki/Top_trading_cycle) with existing tenants.
     
     # Goal
@@ -29,7 +30,7 @@ info:
     # Getting started
     1. Browse the documentation and try out the [cURL](https://en.wikipedia.org/wiki/CURL) code snippets in the boxes below in your [console](https://en.wikipedia.org/wiki/Command-line_interface).   
     2. Authenticate for the demo versions using the username:password combination `-u mannheim:Exc3llence!` and select your local data input file in [JSON](https://en.wikipedia.org/wiki/JSON) format `-d @'C:\...\myfile.json'` following the structure given in the "Request samples" in the rightmost panel.    
-    3. Alternatively, fine-tune your settings and interactively test your responses using the API's [Swagger user interface](https://matchingtools.com/swagger-ui): Select one of the documented algorithms: `HRI`, `SRI` or `TTC`. Authenticate using the red exclamation mark button. Modify and apply the yellow-shaded example input values and "Try it out!".
+    3. Alternatively, fine-tune your settings and interactively test your responses using the API's [Swagger user interface](https://matchingtools.com/swagger-ui): Select one of the documented algorithms: `HRI`, `HRI2`, `SRI` or `TTC`. Authenticate using the red exclamation mark button. Modify and apply the yellow-shaded example input values and "Try it out!".
 
     # Security
     MatchingTools uses the HTTPS communication protocol, which is encrypted by Secure Sockets Layer (SSL). This ensures authentication of the API and protection of the privacy and integrity of the exchanged data. The bidirectional encryption of communications between client and server protects against eavesdropping and tampering of the communication. HTTPS connections are now widely used for online payment transactions, e-mail and for sensitive transactions in corporate information systems to secure accounts and keep user communications, identity and web browsing private.
@@ -68,6 +69,8 @@ tags:
     description: Algorithm for hospital/residents problems
 #  - name: IAA
 #    description: Immediate Acceptance Algorithm for hospital/residents problems (a.k.a. college admissions problems) with incomplete rank order lists.
+  - name: HRI2
+    description: Algorithm for hospital/residents problems with couples
   - name: SRI
     description: Algorithm for stable roomates problems
   - name: TTC
@@ -144,6 +147,55 @@ paths:
             }
           schema:
             $ref: "#/definitions/hri_out"
+  '/hri2/demo':
+    post:
+      tags:
+        - HRI2
+      summary: Roth Peranson Algorithm for hospital/residents problems with couples 
+      operationId: hri2_demo
+      description: |
+        Roth Peranson Algorithm for [hospital/residents problems](https://en.wikipedia.org/wiki/Hospital_resident) with incomplete rank order lists and couples. Finds the resident-optimal stable matching. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).
+        
+        ##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:
+          ``` 
+          curl -X POST 'https://api.matchingtools.org/hri2/demo' --header 'Content-Type: application/json' -u username:password -d @'C:\...\hri2.json'
+          ```
+      parameters:
+        - in: "body"
+          name: "instance"
+          description: "HRI2 specification in JSON format."
+          required: true
+          schema:
+            $ref: "#/definitions/hri2_in"
+      responses:
+        '401':
+          $ref: "#/responses/UnauthorizedError"
+        '405':
+          description: "Invalid input"
+          examples:
+            {
+              "status": 100,
+              "error": "string"
+            }
+        '200':
+          description: 'OK'
+          examples:
+            {"hri_matching": [
+              {
+                "college": "Public1",
+                "student": "Kai"
+              },
+              {
+                "college": "Public2",
+                "student": "Lea"
+              },
+              {
+                "college": "Private",
+                "student": "Mia"
+              }]
+            }
+          schema:
+            $ref: "#/definitions/hri_out"            
   '/sri/demo':
     post:
       tags:
@@ -289,6 +341,69 @@ definitions:
         type: "array"
         items:
           type: "string"
+          example: {
+              "0": {"college": "Public1",
+                "student": "Kai"},
+              "1": {"college": "Public2",
+              "student": "Lea"},
+              "2": {"college": "Private",
+              "student": "Mia"}
+          }
+          description: "..."
+  hri2_in:
+    type: "object"
+    required:
+    - "student_prefs"
+    - "couples_prefs"
+    - "college_prefs"
+    - "college_capacity"
+    properties:
+      student_prefs:
+        type: "array"
+        items:
+          type: "string"
+          example: {
+              "Lea": ["Public2"],
+              "Mia": ["Private", "Public2", "Public1"],
+              "Kai": ["Public1", "Public2", "Private"]
+          }
+          description: "..."
+      couples_prefs:
+        type: "array"
+        items:
+          type: "string"
+          example: {
+              "Niklas": [
+                ["Public1", "Public2"],
+                ["Public1"],
+                ["Public2"]
+                ],
+              "Anna": [
+                ["Private", "Public2"],
+                ["Private"]
+                ]
+          }
+          description: "..."
+      college_prefs:
+        type: "array"
+        items:
+          type: "string"
+          example: {
+              "Public1": ["Lea", "Kai", "Mia"],
+              "Public2": ["Lea", "Kai", "Mia"],
+              "Private": ["Kai", "Mia", "Lea"]
+            }
+          description: "..."
+      college_capacity:
+        type: "array"
+        items:
+          type: "integer"
+          example: {
+              "Public1": 1,
+              "Public2": 1,
+              "Private": 1
+          }
+          description: "..."
   sri_in:
     type: "object"
     required:
