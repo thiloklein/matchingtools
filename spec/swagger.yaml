@@ -180,7 +180,7 @@ paths:
         '200':
           description: 'OK'
           examples:
-            {"hri_matching": [
+            {"hri2_matching": [
               {
                 "college": "Micro1",
                 "student": "Mia"
