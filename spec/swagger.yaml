@@ -182,16 +182,16 @@ paths:
           examples:
             {"hri_matching": [
               {
-                "college": "Public1",
-                "student": "Kai"
-              },
-              {
-                "college": "Public2",
-                "student": "Lea"
-              },
-              {
-                "college": "Private",
+                "college": "Micro1",
                 "student": "Mia"
+              },
+              {
+                "college": "Micro1",
+                "student": "Niklas"
+              },
+              {
+                "college": "Macro",
+                "student": "Kai"
               }]
             }
           schema:
@@ -363,9 +363,9 @@ definitions:
         items:
           type: "string"
           example: {
-              "Lea": ["Public2"],
-              "Mia": ["Private", "Public2", "Public1"],
-              "Kai": ["Public1", "Public2", "Private"]
+              "Lea": ["Micro1"],
+              "Mia": ["Micro2", "Micro1", "Macro"],
+              "Kai": ["Macro"]
           }
           description: "..."
       couples_prefs:
@@ -374,13 +374,14 @@ definitions:
           type: "string"
           example: {
               "Niklas": [
-                ["Public1", "Public2"],
-                ["Public1"],
-                ["Public2"]
+                ["Micro1", "Micro2"],
+                ["Macro","Micro1"],
+                ["Micro1"],
+                ["Macro"]
                 ],
               "Anna": [
-                ["Private", "Public2"],
-                ["Private"]
+                ["Macro", "Micro1"],
+                ["Macro","Micro2"]
                 ]
           }
           description: "..."
@@ -389,9 +390,9 @@ definitions:
         items:
           type: "string"
           example: {
-              "Public1": ["Lea", "Kai", "Mia"],
-              "Public2": ["Lea", "Kai", "Mia"],
-              "Private": ["Kai", "Mia", "Lea"]
+              "Micro1": ["Niklas", "Kai", "Mia", "Anna"],
+              "Micro2": ["Lea", "Kai", "Anna"],
+              "Macro": ["Kai", "Mia", "Lea"]
             }
           description: "..."
       college_capacity:
@@ -399,9 +400,9 @@ definitions:
         items:
           type: "integer"
           example: {
-              "Public1": 1,
-              "Public2": 1,
-              "Private": 1
+              "Micro1": 2,
+              "Micro2": 1,
+              "Macro": 1
           }
           description: "..."
   sri_in:
