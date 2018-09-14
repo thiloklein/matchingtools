@@ -408,7 +408,7 @@ definitions:
   hri2_out:
     type: "object"
     properties:
-      hri_matching:
+      hri2_matching:
         type: "array"
         items:
           type: "string"
