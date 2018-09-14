@@ -1,0 +1,24 @@
+{
+
+  "student_prefs": [{
+    
+    "Lea": ["Public2"],
+    "Mia": ["Private", "Public2", "Public1"],
+    "Kai": ["Public1", "Public2", "Private"]
+    
+  }],
+  
+  "college_prefs": [{
+    "Public1": ["Lea", "Kai", "Mia"],
+    "Public2": ["Lea", "Kai", "Mia"],
+    "Private": ["Kai", "Mia", "Lea"]
+    
+  }],
+  
+  "college_capacity": [{
+    "Public1": 1,
+    "Public2": 1,
+    "Private": 1 
+    
+  }]
+}

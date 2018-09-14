@@ -1,0 +1,615 @@
+{
+  "swagger": "2.0",
+  "schemes": [
+    "https"
+  ],
+  "host": "api.matchingtools.org",
+  "basePath": "/",
+  "info": {
+    "description": "MatchingTools is an application programming interface that implements the most commonly used matching algorithms. It is based on the well-documented, tried and tested software implementation in R package [matchingMarkets](https://CRAN.R-project.org/package=matchingMarkets) on the Comprehensive R Archive Network (CRAN). Taking preference lists of market participants as input, the algorithms return stable and/or efficient assignments (or \"matchings\") in [JSON](https://en.wikipedia.org/wiki/JSON) open standard file format. The documentation below is written using the [OpenAPI/Swagger](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md) specification.\n\n# Scope\nThis API comes with four algorithms:\n* `HRI`: Deferred Acceptance Algorithm for hospital/residents problems. Finds all stable matchings in two-sided matching markets. Implemented for both the [stable marriage problem](https://en.wikipedia.org/wiki/Stable_marriage_problem) (two-sided one-to-one matching) and the [hospital/residents problem](https://en.wikipedia.org/wiki/Stable_marriage_problem#Similar_problems), also known as college admissions problem (many-to-one matching).\n* `HRI2`: Roth Peranson Algorithm for hospital/residents problems. Finds the resident-optimal stable matching in two-sided matching markets with couples.\n* `SRI`: Irving Algorithm for  [stable roommates problems](https://en.wikipedia.org/wiki/Stable_roommates_problem). Finds all stable matchings in the roommates problem (one-sided matching market).\n* `TTC`: Top-Trading-Cycles Algorithm for trading indivisible items, e.g. in housing and land markets. Finds stable matchings in the [housing market problem](https://en.wikipedia.org/wiki/Top_trading_cycle) with existing tenants.\n\n# Goal\nThe OpenAPI/Swagger specification used for this API is a standard, language-agnostic interface to REST APIs which\nallows both humans and computers to discover and understand the capabilities of the service without access to source\ncode or documentation. The specification used, should allow users to \nunderstand and interact with the remote service with a minimal amount of implementation logic. Similar to what\ninterfaces have done for lower-level programming, OpenAPI/Swagger removes the guesswork in calling the service.\n\n# Getting started\n1. Browse the documentation and try out the [cURL](https://en.wikipedia.org/wiki/CURL) code snippets in the boxes below in your [console](https://en.wikipedia.org/wiki/Command-line_interface).   \n2. Authenticate for the demo versions using the username:password combination `-u mannheim:Exc3llence!` and select your local data input file in [JSON](https://en.wikipedia.org/wiki/JSON) format `-d @'C:\\...\\myfile.json'` following the structure given in the \"Request samples\" in the rightmost panel.    \n3. Alternatively, fine-tune your settings and interactively test your responses using the API's [Swagger user interface](https://matchingtools.com/swagger-ui): Select one of the documented algorithms: `HRI`, `HRI2`, `SRI` or `TTC`. Authenticate using the red exclamation mark button. Modify and apply the yellow-shaded example input values and \"Try it out!\".\n\n# Security\nMatchingTools uses the HTTPS communication protocol, which is encrypted by Secure Sockets Layer (SSL). This ensures authentication of the API and protection of the privacy and integrity of the exchanged data. The bidirectional encryption of communications between client and server protects against eavesdropping and tampering of the communication. HTTPS connections are now widely used for online payment transactions, e-mail and for sensitive transactions in corporate information systems to secure accounts and keep user communications, identity and web browsing private.\n",
+    "version": "1.0.0",
+    "title": "MatchingTools API",
+    "contact": {
+      "email": "info@matchingtools.com"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "x-logo": {
+      "url": "https://matchingtools.com/logo.png"
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "HRI",
+      "description": "Algorithm for hospital/residents problems"
+    },
+    {
+      "name": "HRI2",
+      "description": "Algorithm for hospital/residents problems with couples"
+    },
+    {
+      "name": "SRI",
+      "description": "Algorithm for stable roomates problems"
+    },
+    {
+      "name": "TTC",
+      "description": "Algorithm for trading indivisible items"
+    }
+  ],
+  "securityDefinitions": {
+    "basic_auth": {
+      "type": "basic",
+      "description": "The credentials for the demo versions of this API are the username:password combination `mannheim:Exc3llence!`."
+    }
+  },
+  "security": [
+    {
+      "basic_auth": []
+    }
+  ],
+  "paths": {
+    "/hri/demo": {
+      "post": {
+        "tags": [
+          "HRI"
+        ],
+        "summary": "Deferred Acceptance Algorithm for hospital/residents problems",
+        "operationId": "hri_demo",
+        "description": "Deferred Acceptance Algorithm for [hospital/residents problems](https://en.wikipedia.org/wiki/Hospital_resident) (a.k.a. college admissions problems) with incomplete rank order lists. Finds the college- or student-optimal stable matchings or the related [stable marriage problem](https://en.wikipedia.org/wiki/Stable_matching). The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).\n\n##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:\n  ``` \n  curl -X POST 'https://api.matchingtools.org/hri/demo' --header 'Content-Type: application/json' -u username:password -d @'C:\\...\\hri.json'\n  ```\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "instance",
+            "description": "HRI specification in JSON format.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/hri_in"
+            }
+          },
+          {
+            "in": "query",
+            "name": "optimum",
+            "type": "string",
+            "required": true,
+            "description": "Type of matching to be returned. Defaults to 'student-optimal'.",
+            "enum": [
+              "student-optimal",
+              "college-optimal"
+            ],
+            "default": "student-optimal"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "hri_matching": [
+                {
+                  "college": "Public1",
+                  "student": "Kai"
+                },
+                {
+                  "college": "Public2",
+                  "student": "Lea"
+                },
+                {
+                  "college": "Private",
+                  "student": "Mia"
+                }
+              ]
+            },
+            "schema": {
+              "$ref": "#/definitions/hri_out"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
+          },
+          "405": {
+            "description": "Invalid input",
+            "examples": {
+              "status": 100,
+              "error": "string"
+            }
+          }
+        }
+      }
+    },
+    "/hri2/demo": {
+      "post": {
+        "tags": [
+          "HRI2"
+        ],
+        "summary": "Roth Peranson Algorithm for hospital/residents problems with couples",
+        "operationId": "hri2_demo",
+        "description": "Roth Peranson Algorithm for [hospital/residents problems](https://en.wikipedia.org/wiki/Hospital_resident) with incomplete rank order lists and couples. Finds the resident-optimal stable matching. The implementation allows for incomplete preference lists (some agents find certain agents unacceptable) and unbalanced instances (unequal number of agents on both sides).\n\n##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:\n  ``` \n  curl -X POST 'https://api.matchingtools.org/hri2/demo' --header 'Content-Type: application/json' -u username:password -d @'C:\\...\\hri2.json'\n  ```\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "instance",
+            "description": "HRI2 specification in JSON format.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/hri2_in"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "hri2_matching": [
+                {
+                  "college": "Micro1",
+                  "student": "Mia"
+                },
+                {
+                  "college": "Micro1",
+                  "student": "Niklas"
+                },
+                {
+                  "college": "Macro",
+                  "student": "Kai"
+                }
+              ]
+            },
+            "schema": {
+              "$ref": "#/definitions/hri2_out"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
+          },
+          "405": {
+            "description": "Invalid input",
+            "examples": {
+              "status": 100,
+              "error": "string"
+            }
+          }
+        }
+      }
+    },
+    "/sri/demo": {
+      "post": {
+        "tags": [
+          "SRI"
+        ],
+        "summary": "Irving Algorithm for stable roomates problems",
+        "operationId": "sri_demo",
+        "description": "Finds all stable matchings (if one exists) in the [stable roommates problem](https://en.wikipedia.org/wiki/Stable_roommates_problem) with incomplete lists based on given preferences.\n\n##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:\n  ``` \n  curl -X POST 'https://api.matchingtools.org/sri/demo' --header 'Content-Type: application/json' -u username:password -d @'C:\\...\\sri.json'\n  ```\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "instance",
+            "description": "SRI specification in JSON format.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sri_in"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "sri_matching": {
+                "1": [
+                  {
+                    "student_1": "Mia",
+                    "student_2": "Kai"
+                  }
+                ]
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/sri_out"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
+          },
+          "405": {
+            "description": "Invalid input",
+            "examples": {
+              "status": 100,
+              "error": "string"
+            }
+          }
+        }
+      }
+    },
+    "/ttc/demo": {
+      "post": {
+        "tags": [
+          "TTC"
+        ],
+        "summary": "Top-Trading-Cycles Algorithm for trading indivisible items",
+        "operationId": "ttc_demo",
+        "description": "Finds the stable matching in the [house allocation problem](https://en.wikipedia.org/wiki/Top_trading_cycle) with existing tenants, e.g. in housing and land markets. Uses the Top-Trading-Cycles Algorithm proposed in Abdulkadiroglu and Sonmez (1999).\n\n##### [cURL](https://en.wikipedia.org/wiki/CURL) code snippet:\n  ``` \n  curl -X POST 'https://api.matchingtools.org/ttc/demo' --header 'Content-Type: application/json' -u username:password -d @'C:\\...\\ttc.json'\n  ```\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "instance",
+            "description": "TTC specification in JSON format.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ttc_in"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "ttc_matching": [
+                {
+                  "college": "Public2",
+                  "student": "Lea"
+                },
+                {
+                  "college": "Private",
+                  "student": "Mia"
+                },
+                {
+                  "college": "Public1",
+                  "student": "Kai"
+                }
+              ]
+            },
+            "schema": {
+              "$ref": "#/definitions/ttc_out"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
+          },
+          "405": {
+            "description": "Invalid input",
+            "examples": {
+              "status": 100,
+              "error": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "UnauthorizedError": {
+      "description": "Authentication failed",
+      "headers": {
+        "WWW_Authenticate": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "hri_in": {
+      "type": "object",
+      "required": [
+        "student_prefs",
+        "college_prefs",
+        "college_capacity"
+      ],
+      "properties": {
+        "student_prefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "Lea": [
+                "Public2"
+              ],
+              "Mia": [
+                "Private",
+                "Public2",
+                "Public1"
+              ],
+              "Kai": [
+                "Public1",
+                "Public2",
+                "Private"
+              ]
+            },
+            "description": "..."
+          }
+        },
+        "college_prefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "Public1": [
+                "Lea",
+                "Kai",
+                "Mia"
+              ],
+              "Public2": [
+                "Lea",
+                "Kai",
+                "Mia"
+              ],
+              "Private": [
+                "Kai",
+                "Mia",
+                "Lea"
+              ]
+            },
+            "description": "..."
+          }
+        },
+        "college_capacity": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "example": {
+              "Public1": 1,
+              "Public2": 1,
+              "Private": 1
+            },
+            "description": "..."
+          }
+        }
+      }
+    },
+    "hri_out": {
+      "type": "object",
+      "properties": {
+        "hri_matching": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "0": {
+                "college": "Public1",
+                "student": "Kai"
+              },
+              "1": {
+                "college": "Public2",
+                "student": "Lea"
+              },
+              "2": {
+                "college": "Private",
+                "student": "Mia"
+              }
+            },
+            "description": "..."
+          }
+        }
+      }
+    },
+    "hri2_in": {
+      "type": "object",
+      "required": [
+        "student_prefs",
+        "couples_prefs",
+        "college_prefs",
+        "college_capacity"
+      ],
+      "properties": {
+        "student_prefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "Lea": [
+                "Micro1"
+              ],
+              "Mia": [
+                "Micro2",
+                "Micro1",
+                "Macro"
+              ],
+              "Kai": [
+                "Macro"
+              ]
+            },
+            "description": "..."
+          }
+        },
+        "couples_prefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "Niklas": [
+                [
+                  "Micro1",
+                  "Micro2"
+                ],
+                [
+                  "Macro",
+                  "Micro1"
+                ],
+                [
+                  "Micro1"
+                ],
+                [
+                  "Macro"
+                ]
+              ],
+              "Anna": [
+                [
+                  "Macro",
+                  "Micro1"
+                ],
+                [
+                  "Macro",
+                  "Micro2"
+                ]
+              ]
+            },
+            "description": "..."
+          }
+        },
+        "college_prefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "Micro1": [
+                "Niklas",
+                "Kai",
+                "Mia",
+                "Anna"
+              ],
+              "Micro2": [
+                "Lea",
+                "Kai",
+                "Anna"
+              ],
+              "Macro": [
+                "Kai",
+                "Mia",
+                "Lea"
+              ]
+            },
+            "description": "..."
+          }
+        },
+        "college_capacity": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "example": {
+              "Micro1": 2,
+              "Micro2": 1,
+              "Macro": 1
+            },
+            "description": "..."
+          }
+        }
+      }
+    },
+    "hri2_out": {
+      "type": "object",
+      "properties": {
+        "hri2_matching": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "0": {
+                "college": "Micro1",
+                "student": "Mia"
+              },
+              "1": {
+                "college": "Micro1",
+                "student": "Niklas"
+              },
+              "2": {
+                "college": "Macro",
+                "student": "Kai"
+              }
+            },
+            "description": "..."
+          }
+        }
+      }
+    },
+    "sri_in": {
+      "type": "object",
+      "required": [
+        "student_prefs"
+      ],
+      "properties": {
+        "student_prefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "Lea": [
+                "Kai"
+              ],
+              "Mia": [
+                "Lea",
+                "Kai"
+              ],
+              "Kai": [
+                "Mia",
+                "Lea"
+              ]
+            },
+            "description": "..."
+          }
+        }
+      }
+    },
+    "sri_out": {
+      "type": "object",
+      "properties": {
+        "sri_matching": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ttc_in": {
+      "type": "object",
+      "required": [
+        "student_prefs",
+        "initial_allocations"
+      ],
+      "properties": {
+        "student_prefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "Lea": [
+                "Public2"
+              ],
+              "Mia": [
+                "Private",
+                "Public1"
+              ],
+              "Kai": [
+                "Public1",
+                "Private"
+              ]
+            },
+            "description": "..."
+          }
+        },
+        "initial_allocations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": {
+              "Lea": "Private",
+              "Mia": "Public1",
+              "Kai": "Public2"
+            },
+            "description": "..."
+          }
+        }
+      }
+    },
+    "ttc_out": {
+      "type": "object",
+      "properties": {
+        "hri_matching": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
