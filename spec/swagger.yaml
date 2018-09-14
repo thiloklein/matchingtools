@@ -195,7 +195,7 @@ paths:
               }]
             }
           schema:
-            $ref: "#/definitions/hri_out"            
+            $ref: "#/definitions/hri2_out"            
   '/sri/demo':
     post:
       tags:
@@ -343,11 +343,11 @@ definitions:
           type: "string"
           example: {
               "0": {"college": "Public1",
-                "student": "Kai"},
+                    "student": "Kai"},
               "1": {"college": "Public2",
-              "student": "Lea"},
+                    "student": "Lea"},
               "2": {"college": "Private",
-              "student": "Mia"}
+                    "student": "Mia"}
           }
           description: "..."
   hri2_in:
@@ -403,6 +403,22 @@ definitions:
               "Micro1": 2,
               "Micro2": 1,
               "Macro": 1
+          }
+          description: "..."
+  hri2_out:
+    type: "object"
+    properties:
+      hri_matching:
+        type: "array"
+        items:
+          type: "string"
+          example: {
+              "0": {"college": "Micro1",
+                    "student": "Mia"},
+              "1": {"college": "Micro1",
+                    "student": "Niklas"},
+              "2": {"college": "Macro",
+                    "student": "Kai"}
           }
           description: "..."
   sri_in:
