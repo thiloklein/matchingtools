@@ -9,8 +9,7 @@ mkdir('-p', 'web_deploy')
 
 cp('-R', 'web/*', 'web_deploy/');
 
-exec('npm run swagger bundle --        -o web_deploy/swagger.json');
-exec('npm run swagger bundle -- --yaml -o web_deploy/swagger.yaml');
+exec('npm run swagger');
 
 var SWAGGER_UI_DIST = require('swagger-ui-dist').getAbsoluteFSPath();
 

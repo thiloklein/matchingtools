@@ -11,19 +11,19 @@
     "gulp-util": "^1.0.0",
     "portfinder": "^1.0.3",
     "shelljs": "^0.10.0",
-    "swagger-repo": "^1.0.0",
     "swagger-ui-dist": "^5.0.0"
   },
   "private": true,
   "scripts": {
     "deploy": "npm run build && deploy-to-gh-pages --update web_deploy",
     "build": "node ./scripts/build.js",
-    "swagger": "swagger-repo",
-    "test": "swagger-repo validate",
+    "swagger": "redocly bundle spec/swagger.yaml -o web_deploy/swagger.yaml && redocly bundle spec/swagger.yaml -o web_deploy/swagger.json --ext json",
+    "test": "redocly lint spec/swagger.yaml",
     "start": "gulp serve",
     "deploy-branch": "node ./scripts/deploy-branch.js"
   },
   "devDependencies": {
+    "@redocly/cli": "^2.20.3",
     "minimatch": "^3.0.4"
   }
 }
