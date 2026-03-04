@@ -29,7 +29,7 @@ info:
     
     # Getting started
     1. Browse the documentation and try out the [cURL](https://en.wikipedia.org/wiki/CURL) code snippets in the boxes below in your [console](https://en.wikipedia.org/wiki/Command-line_interface).   
-    2. Authenticate for the demo versions using the username:password combination `-u mannheim:Exc3llence!` and select your local data input file in [JSON](https://en.wikipedia.org/wiki/JSON) format `-d @'C:\...\myfile.json'` following the structure given in the "Request samples" in the rightmost panel.    
+    2. Authenticate for the demo versions using the username:password combination `-u pforzheim:mark3td3sign!` and select your local data input file in [JSON](https://en.wikipedia.org/wiki/JSON) format `-d @'C:\...\myfile.json'` following the structure given in the "Request samples" in the rightmost panel.    
     3. Alternatively, fine-tune your settings and interactively test your responses using the API's [Swagger user interface](https://api.matchingmarkets.org/swagger-ui): Select one of the documented algorithms: `HRI`, `HRI2`, `SRI` or `TTC`. Authenticate using the red exclamation mark button. Modify and apply the yellow-shaded example input values and "Try it out!".
 
     # Security
