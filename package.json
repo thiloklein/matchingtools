@@ -6,13 +6,13 @@
     "connect": "^3.4.1",
     "cors": "^2.7.1",
     "deploy-to-gh-pages": "^1.1.0",
-    "gulp": "^3.9.1",
-    "gulp-connect": "^4.2.0",
-    "gulp-util": "^3.0.7",
+    "gulp": "^5.0.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-util": "^1.0.0",
     "portfinder": "^1.0.3",
-    "shelljs": "^0.7.0",
+    "shelljs": "^0.10.0",
     "swagger-repo": "^1.0.0",
-    "swagger-ui": "^2.1.4"
+    "swagger-ui": "^5.32.0"
   },
   "private": true,
   "scripts": {
