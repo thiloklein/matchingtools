@@ -1,10 +1,10 @@
 {
   "generator-openapi-repo": {
     "importExistingSpec": false,
-    "name": "MatchingTools",
+    "name": "MatchingMarkets API",
     "description": "",
     "version": "0.1",
-    "repo": "thiloklein/matchingtools",
+    "repo": "thiloklein/MatchingMarketsAPI",
     "splitSpec": false,
     "samples": true,
     "branchPreview": true,

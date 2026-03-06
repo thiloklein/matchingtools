@@ -1,14 +1,14 @@
-# MatchingTools OpenAPI Specification
-[![Build Status](https://travis-ci.org/thiloklein/matchingtools.svg?branch=master)](https://travis-ci.org/thiloklein/matchingtools)
+# MatchingMarkets OpenAPI Specification
+[![Build Status](https://travis-ci.org/thiloklein/MatchingMarketsAPI.svg?branch=master)](https://travis-ci.org/thiloklein/matchingtools)
 
 ## Links
 
-- Documentation(ReDoc): https://matchingtools.com/
-- SwaggerUI: https://matchingtools.com/swagger-ui/
+- Documentation(ReDoc): https://api.matchingmarkets.org/
+- SwaggerUI: https://api.matchingmarkets.org/swagger-ui/
 - Look full spec:
-    + JSON https://matchingtools.com/swagger.json
-    + YAML https://matchingtools.com/swagger.yaml
-- Preview spec version for branch `[branch]`: https://matchingtools.com/preview/[branch]
+    + JSON https://api.matchingmarkets.org/swagger.json
+    + YAML https://api.matchingmarkets.org/swagger.yaml
+- Preview spec version for branch `[branch]`: https://api.matchingmarkets.org/preview/[branch]
 
 ## Working on specification
 ### Install
@@ -20,7 +20,7 @@
 ### Usage
 
 1. Run `npm start` 
-2. Checkout console output to see where local server is started. You can use all [links](#links) (except `preview`) by replacing https://thiloklein.github.io/matchingtools/ with url from the message: `Server started <url>`
+2. Checkout console output to see where local server is started. You can use all [links](#links) (except `preview`) by replacing https://thiloklein.github.io/MatchingMarketsAPI/ with url from the message: `Server started <url>`
 3. Make changes using your favorite editor or `swagger-editor` (look for URL in console output)
 4. All changes are immediately propagated to your local server, moreover all documentation pages will be automagically refreshed in a browser after each change
 **TIP:** you can open `swagger-editor`, documentation and `swagger-ui` in parallel
